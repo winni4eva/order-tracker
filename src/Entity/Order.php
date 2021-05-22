@@ -67,11 +67,23 @@ class Order
      */
     private $orderIssues;
 
+    /**
+     * @ORM\OneToMany(targetEntity=OrderLog::class, mappedBy="order_id")
+     */
+    private $orderLogs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ShippedBox::class, mappedBy="order_id")
+     */
+    private $shippedBoxes;
+
     public function __construct()
     {
         $this->orderItems = new ArrayCollection();
         $this->pickedBoxes = new ArrayCollection();
         $this->orderIssues = new ArrayCollection();
+        $this->orderLogs = new ArrayCollection();
+        $this->shippedBoxes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -240,6 +252,66 @@ class Order
             // set the owning side to null (unless already changed)
             if ($orderIssue->getOrderId() === $this) {
                 $orderIssue->setOrderId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderLog[]
+     */
+    public function getOrderLogs(): Collection
+    {
+        return $this->orderLogs;
+    }
+
+    public function addOrderLog(OrderLog $orderLog): self
+    {
+        if (!$this->orderLogs->contains($orderLog)) {
+            $this->orderLogs[] = $orderLog;
+            $orderLog->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderLog(OrderLog $orderLog): self
+    {
+        if ($this->orderLogs->removeElement($orderLog)) {
+            // set the owning side to null (unless already changed)
+            if ($orderLog->getOrderId() === $this) {
+                $orderLog->setOrderId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ShippedBox[]
+     */
+    public function getShippedBoxes(): Collection
+    {
+        return $this->shippedBoxes;
+    }
+
+    public function addShippedBox(ShippedBox $shippedBox): self
+    {
+        if (!$this->shippedBoxes->contains($shippedBox)) {
+            $this->shippedBoxes[] = $shippedBox;
+            $shippedBox->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShippedBox(ShippedBox $shippedBox): self
+    {
+        if ($this->shippedBoxes->removeElement($shippedBox)) {
+            // set the owning side to null (unless already changed)
+            if ($shippedBox->getOrderId() === $this) {
+                $shippedBox->setOrderId(null);
             }
         }
 

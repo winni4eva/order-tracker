@@ -52,6 +52,14 @@ class OrderShippingDetail
      */
     private $updated_at;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Order::class, inversedBy="orderShippingDetail", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $order_id;
+
+    //@ORM\JoinColumn(nullable=false, name="order_id", referencedColumnName="id")
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +145,18 @@ class OrderShippingDetail
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getOrderId(): ?Order
+    {
+        return $this->order_id;
+    }
+
+    public function setOrderId(Order $order_id): self
+    {
+        $this->order_id = $order_id;
 
         return $this;
     }

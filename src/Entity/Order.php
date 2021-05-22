@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\OrderRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -44,6 +46,21 @@ class Order
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="order_id")
+     */
+    private $orderItems;
+
+    /**
+     * @ORM\OneToOne(targetEntity=OrderShippingDetail::class, mappedBy="order_id", cascade={"persist", "remove"})
+     */
+    private $orderShippingDetail;
+
+    public function __construct()
+    {
+        $this->orderItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,6 +123,53 @@ class Order
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderItem[]
+     */
+    public function getOrderItems(): Collection
+    {
+        return $this->orderItems;
+    }
+
+    public function addOrderItem(OrderItem $orderItem): self
+    {
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems[] = $orderItem;
+            $orderItem->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderItem(OrderItem $orderItem): self
+    {
+        if ($this->orderItems->removeElement($orderItem)) {
+            // set the owning side to null (unless already changed)
+            if ($orderItem->getOrderId() === $this) {
+                $orderItem->setOrderId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getOrderShippingDetail(): ?OrderShippingDetail
+    {
+        return $this->orderShippingDetail;
+    }
+
+    public function setOrderShippingDetail(OrderShippingDetail $orderShippingDetail): self
+    {
+        // set the owning side of the relation if necessary
+        if ($orderShippingDetail->getOrderId() !== $this) {
+            $orderShippingDetail->setOrderId($this);
+        }
+
+        $this->orderShippingDetail = $orderShippingDetail;
 
         return $this;
     }

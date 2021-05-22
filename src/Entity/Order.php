@@ -62,10 +62,16 @@ class Order
      */
     private $pickedBoxes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=OrderIssue::class, mappedBy="order_id")
+     */
+    private $orderIssues;
+
     public function __construct()
     {
         $this->orderItems = new ArrayCollection();
         $this->pickedBoxes = new ArrayCollection();
+        $this->orderIssues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -204,6 +210,36 @@ class Order
             // set the owning side to null (unless already changed)
             if ($pickedBox->getOrderId() === $this) {
                 $pickedBox->setOrderId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderIssue[]
+     */
+    public function getOrderIssues(): Collection
+    {
+        return $this->orderIssues;
+    }
+
+    public function addOrderIssue(OrderIssue $orderIssue): self
+    {
+        if (!$this->orderIssues->contains($orderIssue)) {
+            $this->orderIssues[] = $orderIssue;
+            $orderIssue->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderIssue(OrderIssue $orderIssue): self
+    {
+        if ($this->orderIssues->removeElement($orderIssue)) {
+            // set the owning side to null (unless already changed)
+            if ($orderIssue->getOrderId() === $this) {
+                $orderIssue->setOrderId(null);
             }
         }
 

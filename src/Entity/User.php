@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,6 +49,16 @@ class User
      * @ORM\Column(type="datetime")
      */
     private $updated_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PickedBox::class, mappedBy="user_id")
+     */
+    private $pickedBoxes;
+
+    public function __construct()
+    {
+        $this->pickedBoxes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +133,36 @@ class User
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PickedBox[]
+     */
+    public function getPickedBoxes(): Collection
+    {
+        return $this->pickedBoxes;
+    }
+
+    public function addPickedBox(PickedBox $pickedBox): self
+    {
+        if (!$this->pickedBoxes->contains($pickedBox)) {
+            $this->pickedBoxes[] = $pickedBox;
+            $pickedBox->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removePickedBox(PickedBox $pickedBox): self
+    {
+        if ($this->pickedBoxes->removeElement($pickedBox)) {
+            // set the owning side to null (unless already changed)
+            if ($pickedBox->getUserId() === $this) {
+                $pickedBox->setUserId(null);
+            }
+        }
 
         return $this;
     }

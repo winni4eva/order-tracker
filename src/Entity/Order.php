@@ -57,33 +57,33 @@ class Order
      */
     private $orderShippingDetail;
 
-    /**
-     * @ORM\OneToMany(targetEntity=PickedBox::class, mappedBy="order_id")
-     */
-    private $pickedBoxes;
+    // /**
+    //  * @ORM\OneToMany(targetEntity=PickedBox::class, mappedBy="order_id")
+    //  */
+    // private $pickedBoxes;
 
-    /**
-     * @ORM\OneToMany(targetEntity=OrderIssue::class, mappedBy="order_id")
-     */
-    private $orderIssues;
+    // /**
+    //  * @ORM\OneToMany(targetEntity=OrderIssue::class, mappedBy="order_id")
+    //  */
+    // private $orderIssues;
 
-    /**
-     * @ORM\OneToMany(targetEntity=OrderLog::class, mappedBy="order_id")
-     */
-    private $orderLogs;
+    // /**
+    //  * @ORM\OneToMany(targetEntity=OrderLog::class, mappedBy="order_id")
+    //  */
+    // private $orderLogs;
 
-    /**
-     * @ORM\OneToMany(targetEntity=ShippedBox::class, mappedBy="order_id")
-     */
-    private $shippedBoxes;
+    // /**
+    //  * @ORM\OneToMany(targetEntity=ShippedBox::class, mappedBy="order_id")
+    //  */
+    // private $shippedBoxes;
 
     public function __construct()
     {
         $this->orderItems = new ArrayCollection();
-        $this->pickedBoxes = new ArrayCollection();
-        $this->orderIssues = new ArrayCollection();
-        $this->orderLogs = new ArrayCollection();
-        $this->shippedBoxes = new ArrayCollection();
+        //$this->pickedBoxes = new ArrayCollection();
+        //$this->orderIssues = new ArrayCollection();
+        //$this->orderLogs = new ArrayCollection();
+        //$this->shippedBoxes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,123 +198,123 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Collection|PickedBox[]
-     */
-    public function getPickedBoxes(): Collection
-    {
-        return $this->pickedBoxes;
-    }
+    // /**
+    //  * @return Collection|PickedBox[]
+    //  */
+    // public function getPickedBoxes(): Collection
+    // {
+    //     return $this->pickedBoxes;
+    // }
 
-    public function addPickedBox(PickedBox $pickedBox): self
-    {
-        if (!$this->pickedBoxes->contains($pickedBox)) {
-            $this->pickedBoxes[] = $pickedBox;
-            $pickedBox->setOrderId($this);
-        }
+    // public function addPickedBox(PickedBox $pickedBox): self
+    // {
+    //     if (!$this->pickedBoxes->contains($pickedBox)) {
+    //         $this->pickedBoxes[] = $pickedBox;
+    //         $pickedBox->setOrderId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removePickedBox(PickedBox $pickedBox): self
-    {
-        if ($this->pickedBoxes->removeElement($pickedBox)) {
-            // set the owning side to null (unless already changed)
-            if ($pickedBox->getOrderId() === $this) {
-                $pickedBox->setOrderId(null);
-            }
-        }
+    // public function removePickedBox(PickedBox $pickedBox): self
+    // {
+    //     if ($this->pickedBoxes->removeElement($pickedBox)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($pickedBox->getOrderId() === $this) {
+    //             $pickedBox->setOrderId(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * @return Collection|OrderIssue[]
-     */
-    public function getOrderIssues(): Collection
-    {
-        return $this->orderIssues;
-    }
+    // /**
+    //  * @return Collection|OrderIssue[]
+    //  */
+    // public function getOrderIssues(): Collection
+    // {
+    //     return $this->orderIssues;
+    // }
 
-    public function addOrderIssue(OrderIssue $orderIssue): self
-    {
-        if (!$this->orderIssues->contains($orderIssue)) {
-            $this->orderIssues[] = $orderIssue;
-            $orderIssue->setOrderId($this);
-        }
+    // public function addOrderIssue(OrderIssue $orderIssue): self
+    // {
+    //     if (!$this->orderIssues->contains($orderIssue)) {
+    //         $this->orderIssues[] = $orderIssue;
+    //         $orderIssue->setOrderId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeOrderIssue(OrderIssue $orderIssue): self
-    {
-        if ($this->orderIssues->removeElement($orderIssue)) {
-            // set the owning side to null (unless already changed)
-            if ($orderIssue->getOrderId() === $this) {
-                $orderIssue->setOrderId(null);
-            }
-        }
+    // public function removeOrderIssue(OrderIssue $orderIssue): self
+    // {
+    //     if ($this->orderIssues->removeElement($orderIssue)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($orderIssue->getOrderId() === $this) {
+    //             $orderIssue->setOrderId(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * @return Collection|OrderLog[]
-     */
-    public function getOrderLogs(): Collection
-    {
-        return $this->orderLogs;
-    }
+    // /**
+    //  * @return Collection|OrderLog[]
+    //  */
+    // public function getOrderLogs(): Collection
+    // {
+    //     return $this->orderLogs;
+    // }
 
-    public function addOrderLog(OrderLog $orderLog): self
-    {
-        if (!$this->orderLogs->contains($orderLog)) {
-            $this->orderLogs[] = $orderLog;
-            $orderLog->setOrderId($this);
-        }
+    // public function addOrderLog(OrderLog $orderLog): self
+    // {
+    //     if (!$this->orderLogs->contains($orderLog)) {
+    //         $this->orderLogs[] = $orderLog;
+    //         $orderLog->setOrderId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeOrderLog(OrderLog $orderLog): self
-    {
-        if ($this->orderLogs->removeElement($orderLog)) {
-            // set the owning side to null (unless already changed)
-            if ($orderLog->getOrderId() === $this) {
-                $orderLog->setOrderId(null);
-            }
-        }
+    // public function removeOrderLog(OrderLog $orderLog): self
+    // {
+    //     if ($this->orderLogs->removeElement($orderLog)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($orderLog->getOrderId() === $this) {
+    //             $orderLog->setOrderId(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * @return Collection|ShippedBox[]
-     */
-    public function getShippedBoxes(): Collection
-    {
-        return $this->shippedBoxes;
-    }
+    // /**
+    //  * @return Collection|ShippedBox[]
+    //  */
+    // public function getShippedBoxes(): Collection
+    // {
+    //     return $this->shippedBoxes;
+    // }
 
-    public function addShippedBox(ShippedBox $shippedBox): self
-    {
-        if (!$this->shippedBoxes->contains($shippedBox)) {
-            $this->shippedBoxes[] = $shippedBox;
-            $shippedBox->setOrderId($this);
-        }
+    // public function addShippedBox(ShippedBox $shippedBox): self
+    // {
+    //     if (!$this->shippedBoxes->contains($shippedBox)) {
+    //         $this->shippedBoxes[] = $shippedBox;
+    //         $shippedBox->setOrderId($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeShippedBox(ShippedBox $shippedBox): self
-    {
-        if ($this->shippedBoxes->removeElement($shippedBox)) {
-            // set the owning side to null (unless already changed)
-            if ($shippedBox->getOrderId() === $this) {
-                $shippedBox->setOrderId(null);
-            }
-        }
+    // public function removeShippedBox(ShippedBox $shippedBox): self
+    // {
+    //     if ($this->shippedBoxes->removeElement($shippedBox)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($shippedBox->getOrderId() === $this) {
+    //             $shippedBox->setOrderId(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

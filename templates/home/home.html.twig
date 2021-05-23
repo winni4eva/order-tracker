@@ -1,1 +1,176 @@
-<h3>I am on the home page</h3>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="jumbotron-img jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Order Tracker</h1>
+    </div>
+</div>
+<div class="container">
+    
+    <div class="row">
+        <div class="col-6">
+            <h6>Processing/Cancelled Orders</h6>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">State</th>
+                    <th scope="col">No. Items</th>
+                    <th scope="col">Shipping Details</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Discount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    </tr>
+                    <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    </tr>
+                    <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Item Name</label>
+                    <input type="text" class="form-control" id="item" placeholder="School Bag">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Price</label>
+                    <input type="number" class="form-control" id="price">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Quantity</label>
+                    <input type="text" class="form-control" id="item" placeholder="eg 2">
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="validationServer03">Country</label>
+                        <input type="text" class="form-control" id="validationServer03" placeholder="Country" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid country.
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationServer04">State</label>
+                        <input type="text" class="form-control" id="validationServer04" placeholder="State" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid state.
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationServer05">Zip</label>
+                        <input type="text" class="form-control" id="validationServer05" placeholder="Zip" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid zip.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="validationServer03">Street</label>
+                        <input type="text" class="form-control" id="validationServer03" placeholder="Street" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid street.
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="validationServer04">Phone</label>
+                        <input type="text" class="form-control" id="validationServer04" placeholder="Phone" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid phone.
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            {# <form> #}
+                {# <div class="form-group">
+                    <label for="exampleFormControlInput1">Email address</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                </div> #}
+                {# <div class="form-group">
+                    <label for="exampleFormControlSelect1">Example select</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect2"></label>
+                    <select class="form-control" id="exampleFormControlSelect2">
+                        <option value="ORDER_RECEIVED">Send</option>
+                        <option value="ORDER_CANCELED">CANCELED</option>
+                        <option value="ORDER_PROCESSING">ORDER PROCESSING</option>
+                        <option value="ORDER_READY_TO_SHIP">ORDER READY TO SHIP</option>
+                        <option value="ORDER_SHIPPED">ORDER SHIPPED</option>
+                    </select>
+                </div> #}
+                {# <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Example textarea</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div> #}
+            {# </form> #}
+            {# <form class="was-validated">
+                <div class="custom-control custom-checkbox mb-3">
+                    <input type="checkbox" class="custom-control-input" id="customControlValidation1" required>
+                    <label class="custom-control-label" for="customControlValidation1">Check this custom checkbox</label>
+                    <div class="invalid-feedback">Example invalid feedback text</div>
+                </div>
+
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" required>
+                    <label class="custom-control-label" for="customControlValidation2">Toggle this custom radio</label>
+                </div>
+                <div class="custom-control custom-radio mb-3">
+                    <input type="radio" class="custom-control-input" id="customControlValidation3" name="radio-stacked" required>
+                    <label class="custom-control-label" for="customControlValidation3">Or toggle this other custom radio</label>
+                    <div class="invalid-feedback">More example invalid feedback text</div>
+                </div>
+
+                <div class="form-group">
+                    <select class="custom-select" required>
+                    <option value="">Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                    </select>
+                    <div class="invalid-feedback">Example invalid custom select feedback</div>
+                </div>
+
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+                    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                    <div class="invalid-feedback">Example invalid custom file feedback</div>
+                </div>
+            </form> #}
+        </div>
+    </div>
+</div>
+{% endblock %}

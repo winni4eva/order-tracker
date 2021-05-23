@@ -57,6 +57,13 @@ class OrderController extends AbstractController
         $entityManager->persist($order);
         $entityManager->flush();
 
-        return $this->json(['Success' => 'Saved'], 201);
+        return $this->json(['message' => 'Order created successfully'], 201);
+    }
+
+    public function cancelOrder(Request $request): Response
+    {
+        $data = $request->toArray();
+        
+        return $this->json(['message' => 'Order cancelled successfully']);
     }
 }

@@ -6,3 +6,7 @@ order_create:
    path: /api/v1/orders
    controller: App\Controller\OrderController::create
    methods: [POST]
+order_home:
+  path: /
+  controller: App\Controller\HomeController::index
+  methods: [GET]

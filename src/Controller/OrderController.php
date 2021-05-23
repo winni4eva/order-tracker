@@ -23,7 +23,7 @@ class OrderController extends AbstractController
         return $this->json($orders);
     }
 
-    public function create(Request $request, LoggerInterface $logger): Response
+    public function create(Request $request): Response
     {
         $data = $request->toArray();
         $items = $data['orderItems'];
@@ -51,15 +51,6 @@ class OrderController extends AbstractController
         $orderShippingDetail->setStreet($shippingDetail['street']);
         $orderShippingDetail->setPhone($shippingDetail['phone']);
         $order->setOrderShippingDetail($orderShippingDetail);
-        //dump($request->get('state'));
-        // $form = $this->buildForm(OrderType::class);
-        // $form->handleRequest($request);
-        // if (!$form->isSubmitted() || !$form->isValid()) {
-        //     // throw exception
-        //     $error = $form->getErrors();
-        //     return $this->json(compact('error'), 400);
-        // }
-        // $order = $form->getData();
 
         
         $entityManager->persist($orderShippingDetail);

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Form\Type;
 
 use App\Entity\Order;
+use App\Entity\OrderItem;
+use App\Entity\OrderShippingDetail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -23,7 +25,7 @@ class OrderType extends AbstractType
                     new NotNull()
                 ]
             ])
-            ->add('discount', NumberType::class, [
+            ->add('discount', TextType::class, [
                 'constraints' => [
                     new NotNull()
                 ]
@@ -36,12 +38,14 @@ class OrderType extends AbstractType
             ->add('orderItems', CollectionType::class, [
                 'constraints' => [
                     new NotNull()
-                ]
+                ],
+                'entry_type'   => OrderItem::class,
             ])
             ->add('orderShippingDetail', CollectionType::class, [
                 'constraints' => [
                     new NotNull()
-                ]
+                ],
+                'entry_type'   => OrderShippingDetail::class,
             ]);
     }
 

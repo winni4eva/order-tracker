@@ -38,12 +38,12 @@ class Order
     private $state;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at",type="datetime",options={"default": "CURRENT_TIMESTAMP"}, nullable=true)
      */
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at",type="datetime",options={"default": "CURRENT_TIMESTAMP"}, nullable=true)
      */
     private $updated_at;
 

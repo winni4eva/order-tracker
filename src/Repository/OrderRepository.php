@@ -24,20 +24,21 @@ class OrderRepository extends ServiceEntityRepository
     //  */
     public function findByState(array $states)
     {
-            $queryBuilder = $this->createQueryBuilder('o');
-            $expr = $queryBuilder->expr();
-            $stateNo = 0;
+        $queryBuilder = $this->createQueryBuilder('o');
+        $expr = $queryBuilder->expr();
+        $stateNo = 0;
 
-            foreach ($states as $state) {
-                $queryBuilder = $queryBuilder
-                    ->orWhere($expr->eq('o.state', ':val'.$stateNo))
-                    ->setParameter('val'.$stateNo, $state);
-                $stateNo += 1;
-            }
-            return $queryBuilder->orderBy('o.id', 'DESC')
-            //->setMaxResults(10)
-            ->getQuery()
-            ->getResult();
+        foreach ($states as $state) {
+            $queryBuilder = $queryBuilder
+                ->orWhere($expr->eq('o.state', ':val'.$stateNo))
+                ->setParameter('val'.$stateNo, $state);
+            $stateNo += 1;
+        }
+
+        return $queryBuilder->orderBy('o.id', 'DESC')
+                    //->setMaxResults(10)
+                    ->getQuery()
+                    ->getResult();
     }
 
     public function findOneById($id): ?Order

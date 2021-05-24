@@ -26,6 +26,14 @@ shipper:
   path: /shipper
   controller: App\Controller\ShipperController::index
   methods: [GET, POST]
+shipper_view_order:
+  path: /shipper/order/{id}
+  controller: App\Controller\ShipperController::getOrder
+  methods: [GET]
+shipper_state_change:
+  path: /shipper/order/{id}/state/{state}
+  controller: App\Controller\ShipperController::changeState
+  methods: [GET]
 manager:
   path: /manager
   controller: App\Controller\ManagerController::index

@@ -56,7 +56,7 @@ class OrderRepository extends ServiceEntityRepository
     public function all()
     {
         return $this->createQueryBuilder('o')
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
+            //->getResult();
     }
 }

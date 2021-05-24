@@ -27,7 +27,7 @@ class OrderService
         $this->orderRepository = $orderRepository;
     }
 
-    public function findAll(): array
+    public function findAll()
     {
         return $this->orderRepository->all();
     }
@@ -40,7 +40,7 @@ class OrderService
     public function findByState(string $states): array
     {
         $statesArray = explode(',', $states);
-        
+
         return $this->orderRepository->findByState($statesArray);
     }
 

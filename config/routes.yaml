@@ -18,6 +18,10 @@ picker_view_order:
   path: /picker/order/{id}
   controller: App\Controller\PickerController::getOrder
   methods: [GET]
+picker_state_change:
+  path: /picker/order/{id}/state/{state}
+  controller: App\Controller\PickerController::changeState
+  methods: [GET]
 shipper:
   path: /shipper
   controller: App\Controller\ShipperController::index

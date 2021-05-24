@@ -36,10 +36,6 @@ class HomeController extends AbstractController
 
     private function processFormData(&$orderFormData): array
     {
-        $orderFormData['state'] = 'ORDER_RECEIVED';
-        $orderFormData['discount'] = '0';
-        $orderFormData['total'] = (int)($orderFormData['itemPrice'] * 100);
-        
         $orderFormData['orderItems'][] = [
             'name' => $orderFormData['itemName'],
             'price' => (int)($orderFormData['itemPrice'] * 100),
@@ -52,6 +48,9 @@ class HomeController extends AbstractController
             'street' => $orderFormData['street'],
             'phone' => $orderFormData['phone'],
         ];
+        $orderFormData['state'] = 'ORDER_RECEIVED';
+        $orderFormData['discount'] = '0';
+        $orderFormData['total'] = (int)($orderFormData['itemPrice'] * 100);
 
         return $orderFormData;
     }

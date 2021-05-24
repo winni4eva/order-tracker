@@ -8,17 +8,35 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PickerController extends AbstractController
 {
-    public function index(OrderService $orderService): Response
+
+    protected $orderService;
+
+    public function __construct(OrderService $orderService)
     {
-        $orders = $orderService->findAll();
+        $this->orderService = $orderService;
+    }
+    public function index(): Response
+    {
+        $orders = $this->orderService->findAll();
 
         return $this->render('admin/pickers/index.html.twig', compact('orders'));
     }
 
-    public function getOrder(int $id, OrderService $orderService): Response
+    public function getOrder(int $id): Response
     {
-        $orders = $orderService->findAll();
-        $order = $orderService->find($id);
+        $orders = $this->orderService->findAll();
+        $order = $this->orderService->find($id);
+
+        return $this->render(
+            'admin/pickers/index.html.twig', 
+            compact('orders','order')
+        );
+    }
+
+    public function changeState(int $id, string $state): Response
+    {
+        $order = $this->orderService->setOrderState($id, $state);
+        $orders = $this->orderService->findAll();
 
         return $this->render(
             'admin/pickers/index.html.twig', 

@@ -32,7 +32,18 @@
                                     View
                                 </a>
                             </td>
-                            <td><button>Pick / Complete</button></td>
+                            <td>
+                                {% if order.state is same as 'ORDER_RECEIVED' %}
+                                    <a href="{{ path('picker_state_change', { id: order.id, state: 'ORDER_PROCESSING' }) }}">
+                                        pickup
+                                    </a>
+                                {% endif %}
+                                {% if order.state is same as 'ORDER_PROCESSING' %}
+                                    <a href="{{ path('picker_state_change', { id: order.id, state: 'ORDER_READY_TO_SHIP' }) }}">
+                                        complete
+                                    </a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -58,22 +69,22 @@
                         <td>{{order.state}}</td>
                         <td>
                             {% for index, item in order.orderItems %}
-                            <ol>
-                                <li>#{{index+1}}</li>
-                                <li>{{item.name}}</li>
-                                <li>{{item.price}}</li>
-                                <li>{{item.quantity}}</li>
-                            </ol>
+                            <div>item #{{index+1}}</div>
+                            <ul style="list-style-type: none">
+                                <li>Name: {{item.name}}</li>
+                                <li>Price: {{item.price/100}}</li>
+                                <li>Qty: {{item.quantity}}</li>
+                            </ul>
                             {% endfor %}
                         </td>
                         <td>
-                            <ol>
+                            <ul style="list-style-type: none">
                                 <li>Country: {{order.orderShippingDetail.country}}</li>
                                 <li>State: {{order.orderShippingDetail.state}}</li>
                                 <li>Zip: {{order.orderShippingDetail.zip}}</li>
                                 <li>Street: {{order.orderShippingDetail.street}}</li>
                                 <li>Phone: {{order.orderShippingDetail.phone}}</li>
-                            </ol>
+                            </ul>
                         </td>
                         <td>{{order.total/100}}</td>
                         <td>{{order.discount}}</td>
@@ -82,7 +93,7 @@
             </table>
 
             {% if order.issue is defined %}
-            <h6>Issue</h6>
+                <h6>Issue</h6>
             {% endif %}
         {% endif %}
         </div>

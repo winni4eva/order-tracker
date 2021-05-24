@@ -9,6 +9,7 @@ use App\Entity\OrderItem;
 use App\Entity\OrderShippingDetail;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Throwable;
 
 class OrderService
 {
@@ -33,6 +34,20 @@ class OrderService
     public function find(int $orderId): Order
     {
         return $this->orderRepository->findOneById($orderId);
+    }
+
+    public function setOrderState(int $orderId, string $state): Order
+    {
+        $order = $this->entityManager->getRepository(Order::class)->find($orderId);
+
+        if (!$order) {
+            throw new Throwable("No order row found for id $orderId", 500);
+        }
+        
+        $order->setState($state);
+        $this->entityManager->flush();
+
+        return $order;
     }
 
     public function saveOrder(array $data): bool

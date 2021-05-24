@@ -38,3 +38,7 @@ manager:
   path: /manager
   controller: App\Controller\ManagerController::index
   methods: [GET, POST]
+manager_view_order:
+  path: /manager/order/{id}
+  controller: App\Controller\ManagerController::getOrder
+  methods: [GET]

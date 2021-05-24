@@ -47,4 +47,14 @@ class OrderLogRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+    * @return Order[] Returns an array of Order objects
+    */
+    public function all()
+    {
+        return $this->createQueryBuilder('o')
+            ->getQuery()
+            ->getResult();
+    }
 }

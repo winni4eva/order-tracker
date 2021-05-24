@@ -67,33 +67,33 @@ class DatabaseActivitySubscriber implements EventSubscriber
 
         switch ($state) {
             case 'ORDER_RECEIVED':
-                $user = $this->userRepository->findOneByRoleField('CUSTOMER'); //TODO Should be from an authnticated user
+                $user = $this->userRepository->findOneByRoleField('CUSTOMER'); //TODO Should be from an authenticated user
                 $logState = 'RECEIVED';
                 $logMessage = "Order #$orderId has been received by the system";
                 break;
             case 'ORDER_PROCESSING':
-                $user = $this->userRepository->findOneByRoleField('PICKER'); //TODO Should be from an authnticated user
+                $user = $this->userRepository->findOneByRoleField('PICKER'); //TODO Should be from an authenticated user
                 $username = $user->getFirstName().' '. $user->getLastName();
                 $userId = $user->getId();
                 $logState = 'PROCESSING';
                 $logMessage = "Order #$orderId has been changed to PROCESSING by $username ($userId";
                 break;
             case 'ORDER_READY_TO_SHIP':
-                $user = $this->userRepository->findOneByRoleField('PICKER'); //TODO Should be from an authnticated user
+                $user = $this->userRepository->findOneByRoleField('PICKER'); //TODO Should be from an authenticated user
                 $username = $user->getFirstName().' '. $user->getLastName();
                 $userId = $user->getId();
                 $logState = 'READY TO SHIP';
                 $logMessage = "Order #$orderId has been changed to READY TO SHIP by $username ($userId) with BOX_ID: 1213";
                 break;
             case 'ORDER_SHIPPED':
-                $user = $this->userRepository->findOneByRoleField('SHIPPER'); //TODO Should be from an authnticated user
+                $user = $this->userRepository->findOneByRoleField('SHIPPER'); //TODO Should be from an authenticated user
                 $username = $user->getFirstName().' '. $user->getLastName();
                 $userId = $user->getId();
                 $logState = 'SHIPPED';
                 $logMessage = "Order #$orderId has been changed to SHIPPED by $username ($userId) with AWB: #21321313131 by UPS [View Label]";
                 break;
             default:
-                $user = $this->userRepository->findOneByRoleField('CUSTOMER'); //TODO Should be from an authnticated user
+                $user = $this->userRepository->findOneByRoleField('CUSTOMER'); //TODO Should be from an authenticated user
                 $logState = 'UNKNOWN';
                 $logMessage = "The $state change by Order #$orderId 's was not processed correctly";
                 break;

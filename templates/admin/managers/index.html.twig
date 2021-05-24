@@ -2,6 +2,108 @@
 
 {% block body %}
 <div class="container">
-    <h3>I am on the managers page</h3>
+    <div class="row">
+        <div class="col-9">
+            <h6>Managers</h6>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">State</th>
+                    <th scope="col">No. Items</th>
+                    <th scope="col">Shipping Details</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, order in orders %}
+                        <tr>
+                            <th scope="row">{{index + 1}}</th>
+                            <td>{{order.state}}</td>
+                            <td>{{order.orderItems|length}}</td>
+                            <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
+                            <td>{{order.total/100}}</td>
+                            <td>{{order.discount}}</td>
+                            <td>
+                                <a href="{{ path('manager_view_order', { id: order.id }) }}">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-3">
+        {% if order is defined %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Item Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">State</th>
+                        <td>Items</td>
+                        <td>Shipping</td>
+                        <td>Total</td>
+                        <td>Discount</td>
+                    </tr>
+                    <tr>
+                        <td>{{order.state}}</td>
+                        <td>
+                            {% for index, item in order.orderItems %}
+                            <div>item #{{index+1}}</div>
+                            <ul style="list-style-type: none">
+                                <li>Name: {{item.name}}</li>
+                                <li>Price: {{item.price/100}}</li>
+                                <li>Qty: {{item.quantity}}</li>
+                            </ul>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <ul style="list-style-type: none">
+                                <li>Country: {{order.orderShippingDetail.country}}</li>
+                                <li>State: {{order.orderShippingDetail.state}}</li>
+                                <li>Zip: {{order.orderShippingDetail.zip}}</li>
+                                <li>Street: {{order.orderShippingDetail.street}}</li>
+                                <li>Phone: {{order.orderShippingDetail.phone}}</li>
+                            </ul>
+                        </td>
+                        <td>{{order.total/100}}</td>
+                        <td>{{order.discount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <h6>Logs</h6>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, log in logs %}
+                        <tr>
+                            <th scope="row">{{index + 1}}</th>
+                            <td>{{log.state}}</td>
+                            <td>{{log.message}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 {% endblock %}

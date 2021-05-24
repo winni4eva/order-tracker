@@ -7,11 +7,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Controller\AbstractApiController;
-use App\Entity\OrderItem;
-use App\Entity\OrderShippingDetail;
-use App\Form\Type\OrderType;
-use Psr\Log\LoggerInterface;
+use App\Service\OrderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrderController extends AbstractController
@@ -20,50 +16,30 @@ class OrderController extends AbstractController
     {
         $orders = $this->getDoctrine()->getRepository(Order::class)->findAll();
 
-        return $this->json($orders);
+        return $this->json(compact('orders'), Response::HTTP_OK);
     }
 
-    public function create(Request $request): Response
+    public function create(Request $request, OrderService $orderService): Response
     {
         $data = $request->toArray();
-        $items = $data['orderItems'];
-        $shippingDetail = $data['orderShippingDetail'];
-        
-        $order = new Order();
-        $order->setTotal($data['total']);
-        $order->setDiscount($data['discount']);
-        $order->setState($data['state']);
+        $savedOrder = $orderService->saveOrder($data);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        foreach ($items as $item) {
-            $orderItem = new OrderItem();
-            $orderItem->setName($item['name']);
-            $orderItem->setPrice($item['price']);
-            $orderItem->setQuantity($item['quantity']);
-            $order->addOrderItem($orderItem);
-            $entityManager->persist($orderItem);
+        if (!$savedOrder) {
+            return $this->json(
+                ['message' => 'Order create failed'], 
+                Response::HTTP_BAD_REQUEST
+            ); 
         }
-
-        $orderShippingDetail = new OrderShippingDetail();
-        $orderShippingDetail->setCountry($shippingDetail['country']);
-        $orderShippingDetail->setState($shippingDetail['state']);
-        $orderShippingDetail->setZip($shippingDetail['zip']);
-        $orderShippingDetail->setStreet($shippingDetail['street']);
-        $orderShippingDetail->setPhone($shippingDetail['phone']);
-        $order->setOrderShippingDetail($orderShippingDetail);
-
-        
-        $entityManager->persist($orderShippingDetail);
-        $entityManager->persist($order);
-        $entityManager->flush();
-
-        return $this->json(['message' => 'Order created successfully'], 201);
+        return $this->json(
+            ['message' => 'Order created successfully'], 
+            Response::HTTP_CREATED
+        );
     }
 
     public function cancelOrder(Request $request): Response
     {
         $data = $request->toArray();
-        
+
         return $this->json(['message' => 'Order cancelled successfully']);
     }
 }

@@ -14,6 +14,10 @@ picker:
   path: /picker
   controller: App\Controller\PickerController::index
   methods: [GET, POST]
+picker_view_order:
+  path: /picker/order/{id}
+  controller: App\Controller\PickerController::getOrder
+  methods: [GET]
 shipper:
   path: /shipper
   controller: App\Controller\ShipperController::index

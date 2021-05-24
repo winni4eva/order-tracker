@@ -30,6 +30,11 @@ class OrderService
         return $this->orderRepository->all();
     }
 
+    public function find(int $orderId): Order
+    {
+        return $this->orderRepository->findOneById($orderId);
+    }
+
     public function saveOrder(array $data): bool
     {
         $items = $data['orderItems'];

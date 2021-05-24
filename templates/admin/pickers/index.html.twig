@@ -2,6 +2,48 @@
 
 {% block body %}
 <div class="container">
-    <h3>I am on the pickers page</h3>
+    <div class="row">
+        <div class="col-9">
+            <h6>Picker</h6>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">State</th>
+                    <th scope="col">No. Items</th>
+                    <th scope="col">Shipping Details</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Details</th>
+                    <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, order in orders %}
+                        <tr>
+                            <th scope="row">{{index + 1}}</th>
+                            <td>{{order.state}}</td>
+                            <td>{{order.orderItems|length}}</td>
+                            <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
+                            <td>{{order.total/100}}</td>
+                            <td>{{order.discount}}</td>
+                            <td>
+                                <a href="{{ path('picker_view_order', { id: order.id }) }}">
+                                    View
+                                </a>
+                            </td>
+                            <td><button>Pick / Complete</button></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-3">
+        {% if order is defined %}
+            <h6>Item Details</h6>
+            {{order.orderItems|length}} - {{order.state}}
+        {% endif %}
+        </div>
+    </div>
 </div>
 {% endblock %}

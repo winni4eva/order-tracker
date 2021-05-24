@@ -34,7 +34,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    private function processFormData(&$orderFormData): array
+    private function processFormData(array $orderFormData): array
     {
         $orderFormData['orderItems'][] = [
             'name' => $orderFormData['itemName'],

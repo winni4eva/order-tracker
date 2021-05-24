@@ -11,20 +11,22 @@ class PickerController extends AbstractController
 
     protected $orderService;
 
+    const PICKER_STATES = 'ORDER_RECEIVED,ORDER_CANCELED,ORDER_PROCESSING';
+
     public function __construct(OrderService $orderService)
     {
         $this->orderService = $orderService;
     }
     public function index(): Response
     {
-        $orders = $this->orderService->findAll();
+        $orders = $this->orderService->findByState(self::PICKER_STATES);
 
         return $this->render('admin/pickers/index.html.twig', compact('orders'));
     }
 
     public function getOrder(int $id): Response
     {
-        $orders = $this->orderService->findAll();
+        $orders = $this->orderService->findByState(self::PICKER_STATES);
         $order = $this->orderService->find($id);
 
         return $this->render(
@@ -36,7 +38,7 @@ class PickerController extends AbstractController
     public function changeState(int $id, string $state): Response
     {
         $order = $this->orderService->setOrderState($id, $state);
-        $orders = $this->orderService->findAll();
+        $orders = $this->orderService->findByState(self::PICKER_STATES);
 
         return $this->render(
             'admin/pickers/index.html.twig', 

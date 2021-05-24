@@ -22,19 +22,23 @@ class OrderRepository extends ServiceEntityRepository
     // /**
     //  * @return Order[] Returns an array of Order objects
     //  */
-    /*
-    public function findByExampleField($value)
+    public function findByState(array $states)
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
+            $queryBuilder = $this->createQueryBuilder('o');
+            $expr = $queryBuilder->expr();
+            $stateNo = 0;
+
+            foreach ($states as $state) {
+                $queryBuilder = $queryBuilder
+                    ->orWhere($expr->eq('o.state', ':val'.$stateNo))
+                    ->setParameter('val'.$stateNo, $state);
+                $stateNo += 1;
+            }
+            return $queryBuilder->orderBy('o.id', 'DESC')
+            //->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
     public function findOneById($id): ?Order
     {

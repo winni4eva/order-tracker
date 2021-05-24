@@ -40,8 +40,50 @@
         </div>
         <div class="col-3">
         {% if order is defined %}
-            <h6>Item Details</h6>
-            {{order.orderItems|length}} - {{order.state}}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Item Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">State</th>
+                        <td>Items</td>
+                        <td>Shipping</td>
+                        <td>Total</td>
+                        <td>Discount</td>
+                    </tr>
+                    <tr>
+                        <td>{{order.state}}</td>
+                        <td>
+                            {% for index, item in order.orderItems %}
+                            <ol>
+                                <li>#{{index+1}}</li>
+                                <li>{{item.name}}</li>
+                                <li>{{item.price}}</li>
+                                <li>{{item.quantity}}</li>
+                            </ol>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <ol>
+                                <li>Country: {{order.orderShippingDetail.country}}</li>
+                                <li>State: {{order.orderShippingDetail.state}}</li>
+                                <li>Zip: {{order.orderShippingDetail.zip}}</li>
+                                <li>Street: {{order.orderShippingDetail.street}}</li>
+                                <li>Phone: {{order.orderShippingDetail.phone}}</li>
+                            </ol>
+                        </td>
+                        <td>{{order.total/100}}</td>
+                        <td>{{order.discount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {% if order.issue is defined %}
+            <h6>Issue</h6>
+            {% endif %}
         {% endif %}
         </div>
     </div>

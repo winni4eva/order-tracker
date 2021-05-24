@@ -1,11 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="jumbotron-img jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">Order Tracker</h1>
-    </div>
-</div>
 <div class="container">
     
     <div class="row">
@@ -30,7 +25,7 @@
                             <td>{{order.state}}</td>
                             <td>{{order.orderItems|length}}</td>
                             <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
-                            <td>{{order.total}}</td>
+                            <td>{{order.total/100}}</td>
                             <td>{{order.discount}}</td>
                             <td><button>Cancel</button></td>
                         </tr>

@@ -10,3 +10,15 @@ order_home:
   path: /
   controller: App\Controller\HomeController::index
   methods: [GET, POST]
+picker:
+  path: /picker
+  controller: App\Controller\PickerController::index
+  methods: [GET, POST]
+shipper:
+  path: /shipper
+  controller: App\Controller\ShipperController::index
+  methods: [GET, POST]
+manager:
+  path: /manager
+  controller: App\Controller\ManagerController::index
+  methods: [GET, POST]

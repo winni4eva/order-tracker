@@ -9,11 +9,12 @@ use App\Form\OrderType;
 use App\Service\OrderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends AbstractController
 {
 
-    public function index(Request $request, OrderService $orderService)
+    public function index(Request $request, OrderService $orderService): Response
     {
         
         $form = $this->createForm(OrderType::class);
@@ -27,7 +28,7 @@ class HomeController extends AbstractController
         }
         $orders = $orderService->findAll();
 
-        return $this->render('home/home.html.twig', [
+        return $this->render('home/index.html.twig', [
             'orders' => $orders,
             'form' => $form->createView(),
         ]);

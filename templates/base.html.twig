@@ -18,6 +18,29 @@
         {% endblock %}
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('order_home') }}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('picker') }}">Pickers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('shipper') }}">Shippers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('manager') }}">Managers</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="jumbotron-img jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Order Tracker</h1>
+            </div>
+        </div>
         {% block body %}{% endblock %}
     </body>
 </html>

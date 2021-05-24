@@ -51,7 +51,13 @@
             </table>
         </div>
         <div class="col-6">
-            <form>
+            {{ form_start(our_form) }}
+            {{ form_widget(our_form) }}
+            <div class="col-sm-12">
+                <input type="submit" value="Send" class="btn btn-success float-right" />
+            </div>
+            {{ form_end(our_form) }}
+            {# <form>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Item Name</label>
                     <input type="text" class="form-control" id="item" placeholder="School Bag">
@@ -106,7 +112,7 @@
                     </div>
                 </div>
 
-            </form>
+            </form> #}
             {# <form> #}
                 {# <div class="form-group">
                     <label for="exampleFormControlInput1">Email address</label>

@@ -9,4 +9,4 @@ order_create:
 order_home:
   path: /
   controller: App\Controller\HomeController::index
-  methods: [GET]
+  methods: [GET, POST]

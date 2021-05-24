@@ -12,17 +12,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrderController extends AbstractController
 {
+    protected $orderService;
+
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
+
     public function index(Request $request): Response
     {
-        $orders = $this->getDoctrine()->getRepository(Order::class)->findAll();
+        $orders = $this->orderService->findAll();
 
         return $this->json(compact('orders'), Response::HTTP_OK);
     }
 
-    public function create(Request $request, OrderService $orderService): Response
+    public function create(Request $request): Response
     {
         $data = $request->toArray();
-        $savedOrder = $orderService->saveOrder($data);
+        $savedOrder = $this->orderService->saveOrder($data);
 
         if (!$savedOrder) {
             return $this->json(

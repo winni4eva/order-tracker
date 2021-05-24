@@ -20,14 +20,28 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-           $orderFormData = $form->getData();
-           dump($orderFormData);
-           //$orderService->saveOrder($orderFormData);
+            $orderFormData = $form->getData();
+            $orderFormData['state'] = 'ORDER_RECEIVED';
+            $orderFormData['discount'] = '0';
+            $orderFormData['total'] = (int)($orderFormData['itemPrice'] * 100);
+            
+            $orderFormData['orderItems'][] = [
+                'name' => $orderFormData['itemName'],
+                'price' => (int)($orderFormData['itemPrice'] * 100),
+                'quantity' => (int)$orderFormData['itemQuantity']
+            ];
+            $orderFormData['orderShippingDetail'] = [
+                'country' => $orderFormData['country'],
+                'state' => $orderFormData['state'],
+                'zip' => $orderFormData['zip'],
+                'street' => $orderFormData['street'],
+                'phone' => $orderFormData['phone'],
+            ];
+            $orderService->saveOrder($orderFormData);
             unset($form);
             $form = $this->createForm(OrderType::class);
         }
-        $orders = $this->getDoctrine()->getRepository(Order::class)->findAll();
-        dump($orders);
+        $orders = $orderService->findAll();
 
         return $this->render('home/home.html.twig', [
             'orders' => $orders,

@@ -23,40 +23,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    </tr>
+                    {% for index, order in orders %}
+                        <tr>
+                            <th scope="row">{{index + 1}}</th>
+                            <td>{{order.state}}</td>
+                            <td>{{order.orderItems|length}}</td>
+                            <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
+                            <td>{{order.total}}</td>
+                            <td>{{order.discount}}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
         <div class="col-6">
-            {{ form_start(our_form) }}
-            {{ form_widget(our_form) }}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
             <div class="col-sm-12">
                 <input type="submit" value="Send" class="btn btn-success float-right" />
             </div>
-            {{ form_end(our_form) }}
+            {{ form_end(form) }}
             {# <form>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Item Name</label>

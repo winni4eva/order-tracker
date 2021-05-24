@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Service\OrderService;
@@ -11,7 +13,7 @@ class PickerController extends AbstractController
 
     protected $orderService;
 
-    const PICKER_STATES = 'ORDER_RECEIVED,ORDER_CANCELED,ORDER_PROCESSING';
+    const PICKER_STATES = 'ORDER_RECEIVED,ORDER_PROCESSING';
 
     public function __construct(OrderService $orderService)
     {

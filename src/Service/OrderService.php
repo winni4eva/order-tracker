@@ -7,20 +7,27 @@ namespace App\Service;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\OrderShippingDetail;
+use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class OrderService
 {
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    private $orderRepository;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        OrderRepository $orderRepository
+    )
     {
         $this->entityManager = $entityManager;
+        $this->orderRepository = $orderRepository;
     }
 
     public function findAll(): array
     {
-        return $this->entityManager->getRepository(Order::class)->findAll();
+        return $this->orderRepository->all();
     }
 
     public function saveOrder(array $data): bool

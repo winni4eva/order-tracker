@@ -7,13 +7,13 @@ namespace App\Service;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\OrderShippingDetail;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class OrderService
 {
     private $entityManager;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
@@ -54,7 +54,7 @@ class OrderService
         $this->entityManager->persist($orderShippingDetail);
         $this->entityManager->persist($order);
         $this->entityManager->flush();
-        
+
         return true;
     }
 

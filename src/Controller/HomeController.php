@@ -15,16 +15,19 @@ class HomeController extends AbstractController
 
     public function index(Request $request, OrderService $orderService)
     {
-        $orders = $this->getDoctrine()->getRepository(Order::class)->findAll();
+        
         $form = $this->createForm(OrderType::class);
         $form->handleRequest($request);
-        dump($orders);
-        dump($orderService->saveOrder());
+        
         if ($form->isSubmitted() && $form->isValid()) {
            $orderFormData = $form->getData();
            dump($orderFormData);
-           // do something interesting here
+           //$orderService->saveOrder($orderFormData);
+            unset($form);
+            $form = $this->createForm(OrderType::class);
         }
+        $orders = $this->getDoctrine()->getRepository(Order::class)->findAll();
+        dump($orders);
 
         return $this->render('home/home.html.twig', [
             'orders' => $orders,

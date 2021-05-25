@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Order;
 use App\Form\OrderType;
 use App\Service\OrderService;
 use Knp\Component\Pager\PaginatorInterface;
@@ -54,32 +53,11 @@ class HomeController extends AbstractController
         ]);
     }
 
-    public function cancelOrder(int $id, string $state, Request $request): Response
+    public function cancelOrder(int $id, string $state): Response
     {
-        $order = $this->orderService->setOrderState($id, $state);
-        $orders = $this->orderService->findAll();
-        $pagination = $this->paginator->paginate(
-            $orders,
-            $request->query->getInt('page', 1),
-            self::LIMIT_PER_PAGE
-        );
+        $this->orderService->setOrderState($id, $state);
 
-        $form = $this->createForm(OrderType::class);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $orderFormData = $form->getData();
-            $this->orderService->saveOrder($this->processFormData($orderFormData));
-            unset($form);
-            $form = $this->createForm(OrderType::class);
-        }
-
-        return $this->render(
-            'home/index.html.twig', [
-                'pagination' => $pagination,
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->redirect($this->generateUrl('order_home'));
     }
 
     private function processFormData(array $orderFormData): array

@@ -42,11 +42,4 @@ class OrderController extends AbstractController
             Response::HTTP_CREATED
         );
     }
-
-    public function cancelOrder(Request $request): Response
-    {
-        $data = $request->toArray();
-
-        return $this->json(['message' => 'Order cancelled successfully']);
-    }
 }

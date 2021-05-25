@@ -18,7 +18,7 @@ class LogService
         $this->orderLogRepository = $orderLogRepository;
     }
 
-    public function findAll(): array
+    public function findAll()
     {
         return $this->orderLogRepository->all();
     }

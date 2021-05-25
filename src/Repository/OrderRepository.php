@@ -36,9 +36,7 @@ class OrderRepository extends ServiceEntityRepository
         }
 
         return $queryBuilder->orderBy('o.id', 'DESC')
-                    //->setMaxResults(10)
-                    ->getQuery()
-                    ->getResult();
+                    ->getQuery();
     }
 
     public function findOneById($id): ?Order

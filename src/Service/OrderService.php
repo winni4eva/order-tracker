@@ -37,7 +37,7 @@ class OrderService
         return $this->orderRepository->findOneById($orderId);
     }
 
-    public function findByState(string $states): array
+    public function findByState(string $states)
     {
         $statesArray = explode(',', $states);
 

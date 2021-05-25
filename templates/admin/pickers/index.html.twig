@@ -19,7 +19,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for index, order in orders %}
+                    {% for index, order in pagination %}
                         <tr>
                             <th scope="row">{{index + 1}}</th>
                             <td>{{order.state}}</td>
@@ -48,6 +48,9 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
         </div>
         <div class="col-3">
         {% if order is defined %}

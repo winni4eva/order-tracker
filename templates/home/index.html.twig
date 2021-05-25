@@ -6,9 +6,9 @@
     <div class="row">
         <div class="col-8">
             <h6>Processing/Cancelled Orders</h6>
-            <div class="count">
+            {# <div class="count">
                 {{ pagination.getTotalItemCount }}
-            </div>
+            </div> #}
             <table class="table">
                 <thead>
                     <tr>
@@ -30,7 +30,13 @@
                             <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
                             <td>{{order.total/100}}</td>
                             <td>{{order.discount}}</td>
-                            <td><button>Cancel</button></td>
+                            <td>
+                                {% if order.state is same as 'ORDER_RECEIVED' %}
+                                    <a href="{{ path('cancel_order', { id: order.id, state: 'ORDER_CANCELED' }) }}">
+                                        cancel
+                                    </a>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

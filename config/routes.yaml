@@ -10,6 +10,10 @@ order_home:
   path: /
   controller: App\Controller\HomeController::index
   methods: [GET, POST]
+cancel_order:
+  path: /order/{id}/state/{state}
+  controller: App\Controller\HomeController::cancelOrder
+  methods: [GET]
 picker:
   path: /picker
   controller: App\Controller\PickerController::index

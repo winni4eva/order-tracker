@@ -16,7 +16,20 @@ class HomeController extends AbstractController
 {
     const LIMIT_PER_PAGE = 5;
 
-    public function index(Request $request, OrderService $orderService, PaginatorInterface $paginator): Response
+    protected $orderService;
+
+    protected $paginator;
+
+    public function __construct(
+        OrderService $orderService,
+        PaginatorInterface $paginator
+    )
+    {
+        $this->orderService = $orderService;
+        $this->paginator = $paginator;
+    }
+
+    public function index(Request $request): Response
     {
         
         $form = $this->createForm(OrderType::class);
@@ -24,12 +37,12 @@ class HomeController extends AbstractController
         
         if ($form->isSubmitted() && $form->isValid()) {
             $orderFormData = $form->getData();
-            $orderService->saveOrder($this->processFormData($orderFormData));
+            $this->orderService->saveOrder($this->processFormData($orderFormData));
             unset($form);
             $form = $this->createForm(OrderType::class);
         }
-        $orders = $orderService->findAll();
-        $pagination = $paginator->paginate(
+        $orders = $this->orderService->findAll();
+        $pagination = $this->paginator->paginate(
             $orders,
             $request->query->getInt('page', 1),
             self::LIMIT_PER_PAGE
@@ -39,6 +52,34 @@ class HomeController extends AbstractController
             'pagination' => $pagination,
             'form' => $form->createView(),
         ]);
+    }
+
+    public function cancelOrder(int $id, string $state, Request $request): Response
+    {
+        $order = $this->orderService->setOrderState($id, $state);
+        $orders = $this->orderService->findAll();
+        $pagination = $this->paginator->paginate(
+            $orders,
+            $request->query->getInt('page', 1),
+            self::LIMIT_PER_PAGE
+        );
+
+        $form = $this->createForm(OrderType::class);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $orderFormData = $form->getData();
+            $this->orderService->saveOrder($this->processFormData($orderFormData));
+            unset($form);
+            $form = $this->createForm(OrderType::class);
+        }
+
+        return $this->render(
+            'home/index.html.twig', [
+                'pagination' => $pagination,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     private function processFormData(array $orderFormData): array

@@ -54,6 +54,7 @@ class OrderLogRepository extends ServiceEntityRepository
     public function all()
     {
         return $this->createQueryBuilder('o')
+            ->orderBy('o.id', 'DESC')
             ->getQuery();
     }
 }

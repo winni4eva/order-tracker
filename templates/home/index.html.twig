@@ -12,7 +12,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                    <th scope="col">#</th>
                     <th scope="col">State</th>
                     <th scope="col">No. Items</th>
                     <th scope="col">Shipping Details</th>
@@ -24,7 +23,6 @@
                 <tbody>
                     {% for index, order in pagination %}
                         <tr>
-                            <th scope="row">{{index + 1}}</th>
                             <td>{{order.state}}</td>
                             <td>{{order.orderItems|length}}</td>
                             <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>

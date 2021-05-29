@@ -62,10 +62,10 @@ class Order
      */
     private $pickedBoxes;
 
-    // /**
-    //  * @ORM\OneToMany(targetEntity=OrderIssue::class, mappedBy="order_id")
-    //  */
-    // private $orderIssues;
+    /**
+     * @ORM\OneToMany(targetEntity=OrderIssue::class, mappedBy="order_id")
+     */
+    private $orderIssues;
 
     // /**
     //  * @ORM\OneToMany(targetEntity=OrderLog::class, mappedBy="order_id")
@@ -81,7 +81,7 @@ class Order
     {
         $this->orderItems = new ArrayCollection();
         $this->pickedBoxes = new ArrayCollection();
-        //$this->orderIssues = new ArrayCollection();
+        $this->orderIssues = new ArrayCollection();
         //$this->orderLogs = new ArrayCollection();
         //$this->shippedBoxes = new ArrayCollection();
     }
@@ -228,35 +228,35 @@ class Order
         return $this;
     }
 
-    // /**
-    //  * @return Collection|OrderIssue[]
-    //  */
-    // public function getOrderIssues(): Collection
-    // {
-    //     return $this->orderIssues;
-    // }
+    /**
+     * @return Collection|OrderIssue[]
+     */
+    public function getOrderIssues(): Collection
+    {
+        return $this->orderIssues;
+    }
 
-    // public function addOrderIssue(OrderIssue $orderIssue): self
-    // {
-    //     if (!$this->orderIssues->contains($orderIssue)) {
-    //         $this->orderIssues[] = $orderIssue;
-    //         $orderIssue->setOrderId($this);
-    //     }
+    public function addOrderIssue(OrderIssue $orderIssue): self
+    {
+        if (!$this->orderIssues->contains($orderIssue)) {
+            $this->orderIssues[] = $orderIssue;
+            $orderIssue->setOrderId($this);
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function removeOrderIssue(OrderIssue $orderIssue): self
-    // {
-    //     if ($this->orderIssues->removeElement($orderIssue)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($orderIssue->getOrderId() === $this) {
-    //             $orderIssue->setOrderId(null);
-    //         }
-    //     }
+    public function removeOrderIssue(OrderIssue $orderIssue): self
+    {
+        if ($this->orderIssues->removeElement($orderIssue)) {
+            // set the owning side to null (unless already changed)
+            if ($orderIssue->getOrderId() === $this) {
+                $orderIssue->setOrderId(null);
+            }
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     // /**
     //  * @return Collection|OrderLog[]

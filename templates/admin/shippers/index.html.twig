@@ -38,9 +38,15 @@
                             </td>
                             <td>
                                 {% if order.state is same as 'ORDER_READY_TO_SHIP' %}
-                                    <a href="{{ path('shipper_state_change', { id: order.id, state: 'ORDER_SHIPPED' }) }}">
-                                        ship
-                                    </a>
+                                    <form method="POST" action="{{ path('shipper_state_change', { id: order.id, state: 'ORDER_SHIPPED' }) }}">
+                                        <select name="status">
+                                            <option value="missing">Missing<option>
+                                            <option value="damaged">Damaged<option>
+                                            <option value="mismatched">Mismatched<option>
+                                        </select>
+                                        <input type="text" name="boxId" placeholder="Enter Box Id">
+                                        <button type="submit" class="btn btn-primary">Ship</button>
+                                    </form>
                                 {% endif %}
                             </td>
                         </tr>

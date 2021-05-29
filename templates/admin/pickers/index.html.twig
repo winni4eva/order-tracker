@@ -38,7 +38,7 @@
                                 {% endif %}
                                 {% if order.state is same as 'ORDER_PROCESSING' %}
                                     <form method="POST" action="{{ path('picker_state_change', { id: order.id, state: 'ORDER_READY_TO_SHIP' }) }}">
-                                        <input type="text" name="boxId">
+                                        <input type="text" name="boxId" placeholder="Enter Box Id">
                                         <button type="submit" class="btn btn-primary">Complete</button>
                                     </form>
                                 {% endif %}

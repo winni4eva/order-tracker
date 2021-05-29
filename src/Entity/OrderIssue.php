@@ -44,6 +44,11 @@ class OrderIssue
      */
     private $user_id;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $state;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +110,18 @@ class OrderIssue
     public function setUserId(?User $user_id): self
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }

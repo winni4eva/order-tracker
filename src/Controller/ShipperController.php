@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\OrderIssueService;
 use App\Service\OrderService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +15,8 @@ class ShipperController extends AbstractController
 {
     protected $orderService;
 
+    protected $orderIssueService;
+
     protected $paginator;
 
     const SHIPPER_STATES = 'ORDER_READY_TO_SHIP';
@@ -22,11 +25,13 @@ class ShipperController extends AbstractController
 
     public function __construct(
         OrderService $orderService,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        OrderIssueService $orderIssueService
     )
     {
         $this->orderService = $orderService;
         $this->paginator = $paginator;
+        $this->orderIssueService = $orderIssueService;
     }
 
     public function index(Request $request): Response
@@ -62,8 +67,8 @@ class ShipperController extends AbstractController
 
     public function changeState(int $id, string $state, Request $request): Response
     {
-        $this->processShippingFormData($request);
-        //$order = $this->orderService->setOrderState($id, $state);
+        $state = $this->processShippingFormData($id, $request);
+        $order = $this->orderService->setOrderState($id, $state);
         $orders = $this->orderService->findByState(self::SHIPPER_STATES);
         $pagination = $this->paginator->paginate(
             $orders,
@@ -78,29 +83,38 @@ class ShipperController extends AbstractController
         );
     }
 
-    private function processShippingFormData(Request $request): array
+    private function processShippingFormData(int $orderId, Request $request): string
     {
         $orderStatus = $request->get('status');
         $formData = [];
+        $state = 'ORDER_SHIPPED';
         switch ($orderStatus) {
             case 'issue':
-                $condition = $request->get('condition');
-                $detials = $request->get('details');
+                $formData['condition'] = $request->get('condition') ?? 'None set';
+                $formData['details'] = $request->get('details') ?? 'None set';
+                $state = 'ORDER_PROCESSING';
+                $this->orderIssueService->saveOrderIssue($orderId, $formData);
                 break;
             case 'ship':
-                $courier = $request->get('courier');
-                $tracking = $request->get('tracking');
-                $uploadedFile = $request->files->get('image');
-                $destination = $this->getParameter('kernel.project_dir').'/public/shipping-images';
-                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
-                $imgPath = $uploadedFile->move($destination, $newFilename);
-                dd($imgPath);
+                $imgPath = '';
+                if ($request->files->get('image')) {
+                    $uploadedFile = $request->files->get('image');
+                    $destination = $this->getParameter('kernel.project_dir').'/public/shipping-images';
+                    $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $newFilename = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
+                    $uploadedFile->move($destination, $newFilename);
+                    $imgPath = "/public/shipping-images/$newFilename";
+                }
+                $formData['imgPath'] = $imgPath;
+                $formData['tracking'] = $request->get('tracking') ?? 'None set';
+                $formData['courier'] = $request->get('courier') ?? 'None set';
                 break;
             default:
-                # code...
+                $formData['imgPath'] = '';
+                $formData['tracking'] = 'None set';
+                $formData['courier'] = 'None set';
                 break;
         }
-        return [];
+        return $state;
     }
 }

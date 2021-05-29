@@ -40,11 +40,13 @@
                                 {% if order.state is same as 'ORDER_READY_TO_SHIP' %}
                                     <form method="POST" action="{{ path('shipper_state_change', { id: order.id, state: 'ORDER_SHIPPED' }) }}">
                                         <select name="status">
+                                            <option value="">--condition--<option>
                                             <option value="missing">Missing<option>
                                             <option value="damaged">Damaged<option>
                                             <option value="mismatched">Mismatched<option>
+                                            <option value="mismatched">Issue<option>
                                         </select>
-                                        <input type="text" name="boxId" placeholder="Enter Box Id">
+                                        <textarea></textarea>
                                         <button type="submit" class="btn btn-primary">Ship</button>
                                     </form>
                                 {% endif %}

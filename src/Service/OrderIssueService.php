@@ -34,7 +34,7 @@ class OrderIssueService
         $this->orderRepository = $orderRepository;
     }
 
-    public function saveOrderIssue( int $orderId, array $issue): void
+    public function saveOrderIssue(int $orderId, array $issue): void
     {
         [
             'condition' => $condition,

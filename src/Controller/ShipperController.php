@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Service\OrderIssueService;
 use App\Service\OrderService;
+use App\Service\ShippedBoxService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,8 @@ class ShipperController extends AbstractController
 
     protected $orderIssueService;
 
+    protected $shippedBoxService;
+
     protected $paginator;
 
     const SHIPPER_STATES = 'ORDER_READY_TO_SHIP';
@@ -26,12 +29,14 @@ class ShipperController extends AbstractController
     public function __construct(
         OrderService $orderService,
         PaginatorInterface $paginator,
-        OrderIssueService $orderIssueService
+        OrderIssueService $orderIssueService,
+        ShippedBoxService $shippedBoxService
     )
     {
         $this->orderService = $orderService;
         $this->paginator = $paginator;
         $this->orderIssueService = $orderIssueService;
+        $this->shippedBoxService = $shippedBoxService;
     }
 
     public function index(Request $request): Response
@@ -77,9 +82,8 @@ class ShipperController extends AbstractController
         );
 
         return $this->render(
-            'admin/shippers/index.html.twig', 
-            compact('pagination')
-            //compact('pagination','order')
+            'admin/shippers/index.html.twig',
+            compact('pagination','order')
         );
     }
 
@@ -108,11 +112,13 @@ class ShipperController extends AbstractController
                 $formData['imgPath'] = $imgPath;
                 $formData['tracking'] = $request->get('tracking') ?? 'None set';
                 $formData['courier'] = $request->get('courier') ?? 'None set';
+                $this->shippedBoxService->saveShippedBox($orderId, $formData);
                 break;
             default:
                 $formData['imgPath'] = '';
                 $formData['tracking'] = 'None set';
                 $formData['courier'] = 'None set';
+                $this->shippedBoxService->saveShippedBox($orderId, $formData);
                 break;
         }
         return $state;

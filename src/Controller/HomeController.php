@@ -30,7 +30,6 @@ class HomeController extends AbstractController
 
     public function index(Request $request): Response
     {
-        
         $form = $this->createForm(OrderType::class);
         $form->handleRequest($request);
         

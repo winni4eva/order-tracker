@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Form\PickedBoxType;
 use App\Service\OrderService;
+use App\Service\PickedBoxService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Knp\Component\Pager\PaginatorInterface;
@@ -15,6 +17,8 @@ class PickerController extends AbstractController
 
     protected $orderService;
 
+    protected $pickedBoxService;
+
     protected $paginator;
 
     const PICKER_STATES = 'ORDER_RECEIVED,ORDER_PROCESSING';
@@ -24,15 +28,27 @@ class PickerController extends AbstractController
 
     public function __construct(
         OrderService $orderService,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        PickedBoxService $pickedBoxService
     )
     {
         $this->orderService = $orderService;
         $this->paginator = $paginator;
+        $this->pickedBoxService = $pickedBoxService;
     }
     public function index(Request $request): Response
     {
         $orders = $this->orderService->findByState(self::PICKER_STATES);
+        $form = $this->createForm(PickedBoxType::class);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pickedFormData = $form->getData();
+            //$this->orderService->saveOrder($this->processFormData($orderFormData));
+            dump($pickedFormData);
+            unset($form);
+            $form = $this->createForm(PickedBoxType::class);
+        }
 
         $pagination = $this->paginator->paginate(
             $orders,
@@ -42,7 +58,10 @@ class PickerController extends AbstractController
 
         return $this->render(
             'admin/pickers/index.html.twig', 
-            compact('pagination')
+            [
+                'pagination' => $pagination, 
+                'form' => $form->createView()
+            ]
         );
     }
 
@@ -65,6 +84,10 @@ class PickerController extends AbstractController
     public function changeState(int $id, string $state, Request $request): Response
     {
         $order = $this->orderService->setOrderState($id, $state);
+        $pickerBoxId = $request->get('boxId');
+        if ($request->get('boxId')) {
+            $this->pickedBoxService->saveBoxId($id, $pickerBoxId);
+        }
         $orders = $this->orderService->findByState(self::PICKER_STATES);
         $pagination = $this->paginator->paginate(
             $orders,

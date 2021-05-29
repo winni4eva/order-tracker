@@ -13,6 +13,7 @@
                     <th scope="col">Shipping Details</th>
                     <th scope="col">Total</th>
                     <th scope="col">Discount</th>
+                    <th scope="col">Box ID</th>
                     <th scope="col">Details</th>
                     <th scope="col">Action</th>
                     </tr>
@@ -25,6 +26,11 @@
                             <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
                             <td>{{order.total/100}}</td>
                             <td>{{order.discount}}</td>
+                            <td>
+                                {% if order.getPickedBoxes()[0].getBoxId() is defined %}
+                                    {{order.getPickedBoxes()[0].getBoxId()}}
+                                {% endif %}
+                            </td>
                             <td>
                                 <a href="{{ path('shipper_view_order', { id: order.id }) }}">
                                     View

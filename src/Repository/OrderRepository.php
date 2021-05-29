@@ -34,8 +34,9 @@ class OrderRepository extends ServiceEntityRepository
                 ->setParameter('val'.$stateNo, $state);
             $stateNo += 1;
         }
-
+        
         return $queryBuilder->orderBy('o.id', 'DESC')
+                    ->leftJoin('o.pickedBoxes', 'pickedBoxes')
                     ->getQuery();
     }
 

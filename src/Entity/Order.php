@@ -57,10 +57,10 @@ class Order
      */
     private $orderShippingDetail;
 
-    // /**
-    //  * @ORM\OneToMany(targetEntity=PickedBox::class, mappedBy="order_id")
-    //  */
-    // private $pickedBoxes;
+    /**
+     * @ORM\OneToMany(targetEntity=PickedBox::class, mappedBy="order_id")
+     */
+    private $pickedBoxes;
 
     // /**
     //  * @ORM\OneToMany(targetEntity=OrderIssue::class, mappedBy="order_id")
@@ -80,7 +80,7 @@ class Order
     public function __construct()
     {
         $this->orderItems = new ArrayCollection();
-        //$this->pickedBoxes = new ArrayCollection();
+        $this->pickedBoxes = new ArrayCollection();
         //$this->orderIssues = new ArrayCollection();
         //$this->orderLogs = new ArrayCollection();
         //$this->shippedBoxes = new ArrayCollection();
@@ -198,35 +198,35 @@ class Order
         return $this;
     }
 
-    // /**
-    //  * @return Collection|PickedBox[]
-    //  */
-    // public function getPickedBoxes(): Collection
-    // {
-    //     return $this->pickedBoxes;
-    // }
+    /**
+     * @return Collection|PickedBox[]
+     */
+    public function getPickedBoxes(): Collection
+    {
+        return $this->pickedBoxes;
+    }
 
-    // public function addPickedBox(PickedBox $pickedBox): self
-    // {
-    //     if (!$this->pickedBoxes->contains($pickedBox)) {
-    //         $this->pickedBoxes[] = $pickedBox;
-    //         $pickedBox->setOrderId($this);
-    //     }
+    public function addPickedBox(PickedBox $pickedBox): self
+    {
+        if (!$this->pickedBoxes->contains($pickedBox)) {
+            $this->pickedBoxes[] = $pickedBox;
+            $pickedBox->setOrderId($this);
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
-    // public function removePickedBox(PickedBox $pickedBox): self
-    // {
-    //     if ($this->pickedBoxes->removeElement($pickedBox)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($pickedBox->getOrderId() === $this) {
-    //             $pickedBox->setOrderId(null);
-    //         }
-    //     }
+    public function removePickedBox(PickedBox $pickedBox): self
+    {
+        if ($this->pickedBoxes->removeElement($pickedBox)) {
+            // set the owning side to null (unless already changed)
+            if ($pickedBox->getOrderId() === $this) {
+                $pickedBox->setOrderId(null);
+            }
+        }
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     // /**
     //  * @return Collection|OrderIssue[]

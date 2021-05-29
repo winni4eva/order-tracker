@@ -38,7 +38,7 @@
                             </td>
                             <td>
                                 {% if order.state is same as 'ORDER_READY_TO_SHIP' %}
-                                    <form method="POST" enctype="multipart/form-data" action="{{ path('shipper_state_change', { id: order.id, state: 'ORDER_SHIPPED' }) }}">
+                                    <form method="POST" enctype="multipart/form-data" action="{{ path('shipper_state_change', { id: order.id, state: 'random' }) }}">
                                         <select name="status" class="shipChange">
                                             <option value="">--action--<option>
                                             <option value="issue">Issue<option>
@@ -51,7 +51,7 @@
                                                 <option value="damaged">Damaged<option>
                                                 <option value="mismatched">Mismatched<option>
                                             </select>
-                                            <textarea placeholder="Issue details"></textarea>
+                                            <textarea name="details" placeholder="Issue details"></textarea>
                                         </div>
 
                                         <div class="ship_details" style="visibility: hidden">

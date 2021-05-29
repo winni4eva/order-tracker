@@ -62,7 +62,8 @@ class ShipperController extends AbstractController
 
     public function changeState(int $id, string $state, Request $request): Response
     {
-        $order = $this->orderService->setOrderState($id, $state);
+        $this->processShippingFormData($request);
+        //$order = $this->orderService->setOrderState($id, $state);
         $orders = $this->orderService->findByState(self::SHIPPER_STATES);
         $pagination = $this->paginator->paginate(
             $orders,
@@ -72,7 +73,34 @@ class ShipperController extends AbstractController
 
         return $this->render(
             'admin/shippers/index.html.twig', 
-            compact('pagination','order')
+            compact('pagination')
+            //compact('pagination','order')
         );
+    }
+
+    private function processShippingFormData(Request $request): array
+    {
+        $orderStatus = $request->get('status');
+        $formData = [];
+        switch ($orderStatus) {
+            case 'issue':
+                $condition = $request->get('condition');
+                $detials = $request->get('details');
+                break;
+            case 'ship':
+                $courier = $request->get('courier');
+                $tracking = $request->get('tracking');
+                $uploadedFile = $request->files->get('image');
+                $destination = $this->getParameter('kernel.project_dir').'/public/shipping-images';
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
+                $imgPath = $uploadedFile->move($destination, $newFilename);
+                dd($imgPath);
+                break;
+            default:
+                # code...
+                break;
+        }
+        return [];
     }
 }

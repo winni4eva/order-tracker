@@ -37,7 +37,7 @@ shipper_view_order:
 shipper_state_change:
   path: /shipper/order/{id}/state/{state}
   controller: App\Controller\ShipperController::changeState
-  methods: [GET]
+  methods: [POST]
 manager:
   path: /manager
   controller: App\Controller\ManagerController::index

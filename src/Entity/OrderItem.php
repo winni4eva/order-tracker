@@ -50,6 +50,8 @@ class OrderItem
 
     //@ORM\JoinColumn(nullable=false, name="order_id", referencedColumnName="id")
 
+    const CENTS = 100;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,12 +71,12 @@ class OrderItem
 
     public function getPrice(): ?int
     {
-        return $this->price;
+        return $this->price / self::CENTS;
     }
 
     public function setPrice(int $price): self
     {
-        $this->price = $price;
+        $this->price = (int)($price * self::CENTS);
 
         return $this;
     }

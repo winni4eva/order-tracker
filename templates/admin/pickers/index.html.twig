@@ -24,7 +24,7 @@
                             <td>{{order.state}}</td>
                             <td>{{order.orderItems|length}}</td>
                             <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
-                            <td>{{order.total/100}}</td>
+                            <td>{{order.total}}</td>
                             <td>{{order.discount}}</td>
                             <td>
                                 {% if order.getOrderIssues()[0].getIssue() is defined %}
@@ -81,7 +81,7 @@
                             <div>item #{{index+1}}</div>
                             <ul style="list-style-type: none">
                                 <li>Name: {{item.name}}</li>
-                                <li>Price: {{item.price/100}}</li>
+                                <li>Price: {{item.price}}</li>
                                 <li>Qty: {{item.quantity}}</li>
                             </ul>
                             {% endfor %}

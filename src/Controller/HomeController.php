@@ -63,7 +63,7 @@ class HomeController extends AbstractController
     {
         $orderFormData['orderItems'][] = [
             'name' => $orderFormData['itemName'],
-            'price' => (int)($orderFormData['itemPrice'] * 100),
+            'price' => $orderFormData['itemPrice'],
             'quantity' => (int)$orderFormData['itemQuantity']
         ];
         $orderFormData['orderShippingDetail'] = [
@@ -75,7 +75,7 @@ class HomeController extends AbstractController
         ];
         $orderFormData['state'] = 'ORDER_RECEIVED';
         $orderFormData['discount'] = '0';
-        $orderFormData['total'] = (int)($orderFormData['itemPrice'] * 100);
+        $orderFormData['total'] = $orderFormData['itemPrice'];
 
         return $orderFormData;
     }

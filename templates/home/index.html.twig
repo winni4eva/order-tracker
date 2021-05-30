@@ -27,7 +27,7 @@
                             <td>{{order.state}}</td>
                             <td>{{order.orderItems|length}}</td>
                             <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
-                            <td>{{order.total/100}}</td>
+                            <td>{{order.total}}</td>
                             <td>{{order.discount}}</td>
                             <td>
                                 {% if order.getShippedBoxes()[0].getLabelImage() is defined %}

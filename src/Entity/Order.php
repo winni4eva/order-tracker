@@ -77,6 +77,8 @@ class Order
      */
     private $shippedBoxes;
 
+    const CENTS = 100;
+
     public function __construct()
     {
         $this->orderItems = new ArrayCollection();
@@ -93,12 +95,12 @@ class Order
 
     public function getTotal(): ?int
     {
-        return $this->total;
+        return $this->total / self::CENTS;
     }
 
     public function setTotal(int $total): self
     {
-        $this->total = $total;
+        $this->total = (int)$total / self::CENTS;
 
         return $this;
     }

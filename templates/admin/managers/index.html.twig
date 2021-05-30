@@ -13,6 +13,7 @@
                     <th scope="col">Shipping Details</th>
                     <th scope="col">Total</th>
                     <th scope="col">Discount</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Details</th>
                     </tr>
                 </thead>
@@ -24,6 +25,11 @@
                             <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
                             <td>{{order.total/100}}</td>
                             <td>{{order.discount}}</td>
+                            <td>
+                                {% if order.getShippedBoxes()[0].getLabelImage() is defined %}
+                                    <img width="150" height="150" src="{{ asset(order.getShippedBoxes()[0].getLabelImage()) }}"/>
+                                {% endif %}
+                            </td>
                             <td>
                                 <a href="{{ path('manager_view_order', { id: order.id }) }}">
                                     View

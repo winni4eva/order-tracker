@@ -107,7 +107,7 @@ class ShipperController extends AbstractController
                     $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
                     $newFilename = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
                     $uploadedFile->move($destination, $newFilename);
-                    $imgPath = "/public/shipping-images/$newFilename";
+                    $imgPath = "/shipping-images/$newFilename";
                 }
                 $formData['imgPath'] = $imgPath;
                 $formData['tracking'] = $request->get('tracking') ?? 'None set';

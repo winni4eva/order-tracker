@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Managers{% endblock %}
+
 {% block body %}
 <div class="container">
+    <h1>Managers</h1>
     <div class="row">
-        <div class="col-9">
-            <h6>Managers</h6>
-            <table class="table">
+        <div class="col-9 mb-3">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                     <th scope="col">State</th>
@@ -45,7 +47,7 @@
         </div>
         <div class="col-3">
         {% if order is defined %}
-            <table class="table">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">Item Details</th>
@@ -92,7 +94,7 @@
     <div class="row">
         <div class="col-6">
             <h6>Logs</h6>
-            <table class="table">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                     <th scope="col">State</th>

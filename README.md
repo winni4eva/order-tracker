@@ -8,4 +8,5 @@ This application helps businesses track orders from their customers.
 4. Create a mysql database name eg tracker
 5. Update the env file with your database credentials
 6. Run migration script => php bin/console doctrine:migrations:migrate
+7. Run fixture script => php bin/console doctrine:fixtures:load
 7. Start server => symfony serve:start

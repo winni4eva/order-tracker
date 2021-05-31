@@ -18,6 +18,9 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 2592000 # 30 days in seconds
             logout:
                 path: app_logout
 
@@ -32,3 +35,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+    
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt

@@ -24,10 +24,12 @@ class UserFixture extends BaseFixture
         $this->createMany(10, 'main_users', function($i){
             $user = new User();
             $index = $i + 1;
+            $role = $this->roles[rand(0,2)];
             $user->setEmail(sprintf('test%d@example.com', $index));
             $user->setFirstName($this->faker->firstName);
             $user->setLastName($this->faker->lastName);
-            $user->setRole($this->roles[rand(0,2)]);
+            $user->setRoles([$role]);
+            $user->setRole($role);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 'secret'

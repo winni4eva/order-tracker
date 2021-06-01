@@ -81,6 +81,10 @@ class LogService
                 $courier = $shippedBox->getCourier();
                 $logMessage = "Order #$orderId has been changed to SHIPPED by $username ($userId) with AWB: #$wayBill by $courier [View Label]";
                 break;
+            case 'ORDER_CANCELED':
+                $logState = 'CANCELED';
+                $logMessage = "Order #$orderId has been cancelled by $username ($userId)";
+                break; 
             default:
                 $logState = 'UNKNOWN';
                 $logMessage = "The $state change by Order #$orderId 's was not processed correctly";

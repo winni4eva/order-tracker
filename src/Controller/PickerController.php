@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\Form\PickedBoxType;
 use App\Service\OrderService;
 use App\Service\PickedBoxService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Security("is_granted('ROLE_PICKER') or is_granted('ROLE_MANAGER')")
  */
-class PickerController extends AbstractController
+class PickerController extends BaseController
 {
 
     protected $orderService;

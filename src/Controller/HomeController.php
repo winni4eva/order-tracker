@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\Form\OrderType;
 use App\Service\OrderService;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -15,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @IsGranted("ROLE_USER")
  */
-class HomeController extends AbstractController
+class HomeController extends BaseController
 {
     const LIMIT_PER_PAGE = 5;
 
@@ -34,6 +33,9 @@ class HomeController extends AbstractController
 
     public function index(Request $request): Response
     {
+        dump($this->getUser()->getEmail());
+        dump($this->getUser()->getId());
+        
         $form = $this->createForm(OrderType::class);
         $form->handleRequest($request);
         

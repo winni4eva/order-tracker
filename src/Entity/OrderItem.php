@@ -74,7 +74,7 @@ class OrderItem
         return $this->price / self::CENTS;
     }
 
-    public function setPrice(int $price): self
+    public function setPrice($price): self
     {
         $this->price = (int)($price * self::CENTS);
 

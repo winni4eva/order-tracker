@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Security("is_granted('ROLE_SHIPPER') or is_granted('ROLE_MANAGER')")
  */
-class ShipperController extends AbstractController
+class ShipperController extends BaseController
 {
     protected $orderService;
 

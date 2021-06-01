@@ -33,10 +33,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        #- { path: ^/manager, roles: MANAGER }
-        #- { path: ^/shipper, roles: [SHIPPER, MANAGER] }
-        #- { path: ^/picker, roles: [PICKER, MANAGER] }
-        #- { path: ^/, roles: [PICKER, SHIPPER, MANAGER] }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
     
     encoders:
         App\Entity\User:

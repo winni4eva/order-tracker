@@ -9,4 +9,5 @@ This application helps businesses track orders from their customers.
 5. Update the env file with your database credentials
 6. Run migration script => php bin/console doctrine:migrations:migrate
 7. Run fixture script => php bin/console doctrine:fixtures:load
-7. Start server => symfony serve:start
+8. Start server => symfony serve:start
+9. Copy an email from the user table with the role you want to be logged in as, use that with the password (secret) to login

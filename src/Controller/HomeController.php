@@ -32,10 +32,7 @@ class HomeController extends BaseController
     }
 
     public function index(Request $request): Response
-    {
-        dump($this->getUser()->getEmail());
-        dump($this->getUser()->getId());
-        
+    {   
         $form = $this->createForm(OrderType::class);
         $form->handleRequest($request);
         

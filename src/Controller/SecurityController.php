@@ -7,9 +7,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends BaseController
 {
-    /**
-     * @Route("/login", name="app_login")
-     */
     public function login(AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -21,11 +18,8 @@ class SecurityController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/logout", name="app_logout")
-     */
     public function logout()
     {
-        throw new \Exception('Will be intercepted before getting here');
+        throw new \Exception('User logged out');
     }
 }

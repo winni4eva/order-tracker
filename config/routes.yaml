@@ -6,6 +6,14 @@ order_create:
    path: /api/v1/orders
    controller: App\Controller\OrderController::create
    methods: [POST]
+app_login:
+   path: /login
+   controller: App\Controller\SecurityController::login
+   methods: [GET, POST]
+app_logout:
+   path: /logout
+   controller: App\Controller\SecurityController::logout
+   methods: [GET]
 order_home:
   path: /
   controller: App\Controller\HomeController::index

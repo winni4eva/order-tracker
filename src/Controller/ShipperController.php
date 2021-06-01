@@ -8,7 +8,6 @@ use App\Service\OrderIssueService;
 use App\Service\OrderService;
 use App\Service\ShippedBoxService;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

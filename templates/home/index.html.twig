@@ -2,16 +2,43 @@
 
 {% block title %}Home{% endblock %}
 
+{% block label %}Home{% endblock %}
+
 {% block body %}
-<div class="container">
-    <h1>Home</h1>
+<div class="container-fluid">
     <div class="row">
-        <div class="col-8">
-            <table class="table table-bordered">
+    
+        <div class="col-3" style="border-right: 1px dotted black">
+            <h4 style="text-align: center">Add Item</h4>
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_widget(form.itemName, { 'attr': {'class': 'form-control mb-2'} }) }}
+                    {{ form_widget(form.itemPrice, { 'attr': {'class': 'form-control mb-2'} }) }}
+                    {{ form_widget(form.itemQuantity, { 'attr': {'class': 'form-control mb-2'} }) }}
+                    {{ form_widget(form.country, { 'attr': {'class': 'form-control mb-2'} }) }}
+                </div>
+                <div class="col">
+                    {{ form_widget(form.state, { 'attr': {'class': 'form-control mb-2'} }) }}
+                    {{ form_widget(form.zip, { 'attr': {'class': 'form-control mb-2'} }) }}
+                    {{ form_widget(form.street, { 'attr': {'class': 'form-control mb-2'} }) }}
+                    {{ form_widget(form.phone, { 'attr': {'class': 'form-control mb-2'} }) }}
+                </div>
+            </div>
+
+            <div class="col-sm-12 mt-2">
+                <input type="submit" value="Save" class="btn btn-success float-right" />
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+        <div class="col-9">
+            <h4 style="text-align: center">Orders</h4>
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                     <th scope="col">State</th>
-                    <th scope="col">No. Items</th>
+                    <th scope="col">Items</th>
                     <th scope="col">Shipping Details</th>
                     <th scope="col">Total</th>
                     <th scope="col">Discount</th>
@@ -23,8 +50,25 @@
                     {% for index, order in pagination %}
                         <tr>
                             <td>{{order.state}}</td>
-                            <td>{{order.orderItems|length}}</td>
-                            <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
+                            <td>
+                                <ul>
+                                    {% for index, orderItem in order.orderItems %}
+                                        <li><span style="font-weight: bolder">Name:</span> {{orderItem.getName()}}</li>
+                                        <li><span style="font-weight: bolder">Price:</span> ${{orderItem.getPrice()}}</li>
+                                        <li><span style="font-weight: bolder">Qty:</span> {{orderItem.getQuantity()}}</li>
+                                        <hr/>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>{{order.orderShippingDetail.country}}</li>
+                                    <li>{{order.orderShippingDetail.state}}</li>
+                                    <li>{{order.orderShippingDetail.zip}}</li>
+                                    <li>{{order.orderShippingDetail.street}}</li>
+                                    <li>+{{order.orderShippingDetail.phone}}</li>
+                                </ul>
+                            </td>
                             <td>{{order.total}}</td>
                             <td>{{order.discount}}</td>
                             <td>
@@ -46,14 +90,6 @@
             <div class="navigation">
                 {{ knp_pagination_render(pagination) }}
             </div>
-        </div>
-        <div class="col-4">
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <div class="col-sm-12">
-                <input type="submit" value="Send" class="btn btn-success float-right" />
-            </div>
-            {{ form_end(form) }}
         </div>
     </div>
 </div>

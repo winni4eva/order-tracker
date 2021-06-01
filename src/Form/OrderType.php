@@ -13,15 +13,14 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('itemName', TextType::class)
-            ->add('itemPrice', NumberType::class)
-            ->add('itemQuantity', TextType::class)
-            ->add('country', TextType::class)
-            ->add('state', TextType::class)
-            ->add('zip', TextType::class)
-            ->add('street', TextType::class)
-            ->add('phone', TextType::class)
-        ;
+            ->add('itemName', TextType::class, ['attr' => ['placeholder' => 'item name']])
+            ->add('itemPrice', NumberType::class, ['attr' => ['placeholder' => 'price']])
+            ->add('itemQuantity', TextType::class, ['attr' => ['placeholder' => 'quantity']])
+            ->add('country', TextType::class, ['attr' => ['placeholder' => 'country']])
+            ->add('state', TextType::class, ['attr' => ['placeholder' => 'state']])
+            ->add('zip', TextType::class, ['attr' => ['placeholder' => 'zip code']])
+            ->add('street', TextType::class, ['attr' => ['placeholder' => 'street']])
+            ->add('phone', TextType::class, ['attr' => ['placeholder' => 'phone']]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

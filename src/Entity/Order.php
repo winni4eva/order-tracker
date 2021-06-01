@@ -100,7 +100,7 @@ class Order
 
     public function setTotal($total): self
     {
-        $this->total = (int)$total / self::CENTS;
+        $this->total = (int)$total * self::CENTS;
 
         return $this;
     }

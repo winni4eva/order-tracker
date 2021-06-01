@@ -78,7 +78,7 @@ class HomeController extends BaseController
         ];
         $orderFormData['state'] = 'ORDER_RECEIVED';
         $orderFormData['discount'] = '0';
-        $orderFormData['total'] = $orderFormData['itemPrice'];
+        $orderFormData['total'] = $orderFormData['itemPrice'] * (int)$orderFormData['itemQuantity'] ;
 
         return $orderFormData;
     }

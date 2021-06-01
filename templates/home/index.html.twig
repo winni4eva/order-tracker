@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-sm-12 mt-2">
-                <input type="submit" value="Save" class="btn btn-success float-right" />
+                <input type="submit" value="Save" class="btn btn-primary float-right" />
             </div>
             {{ form_end(form) }}
         </div>
@@ -69,7 +69,7 @@
                                     <li>+{{order.orderShippingDetail.phone}}</li>
                                 </ul>
                             </td>
-                            <td>{{order.total}}</td>
+                            <td>${{order.total}}</td>
                             {# <td>{{order.discount}}</td> #}
                             <td>
                                 {% if order.getShippedBoxes()[0].getLabelImage() is defined %}

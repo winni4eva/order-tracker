@@ -16,10 +16,12 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
-
+    use TargetPathTrait;
+    
     protected $userRepository;
 
     protected $csrfTokenManager;
@@ -84,12 +86,16 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+            return new RedirectResponse($targetPath);
+        }
+        
         return new RedirectResponse($this->router->generate('order_home'));
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        // todo
+        return new RedirectResponse($this->router->generate('app_login'));
     }
 
     public function supportsRememberMe()

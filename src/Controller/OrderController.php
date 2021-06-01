@@ -9,7 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\OrderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class OrderController extends AbstractController
 {
     protected $orderService;

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\DataFixtures;
+
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -36,7 +38,7 @@ abstract class BaseFixture extends Fixture
             $this->addReference(sprintf('%s_%d', $groupName, $i), $entity);
         }
     }
-    
+
     protected function getRandomReference(string $groupName) {
         if (!isset($this->referencesIndex[$groupName])) {
             $this->referencesIndex[$groupName] = [];

@@ -11,7 +11,11 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * @Security("is_granted('ROLE_SHIPPER') or is_granted('ROLE_MANAGER')")
+ */
 class ShipperController extends AbstractController
 {
     protected $orderService;

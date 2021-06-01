@@ -10,7 +10,11 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_MANAGER")
+ */
 class ManagerController extends AbstractController
 {
 

@@ -21,17 +21,17 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="{{ path('order_home') }}">Home <span class="sr-only">(current)</span></a>
                         </li>
-                        {% if is_granted('ROLE_PICKER') or is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_PICKER') or is_granted('ROLE_MANAGER') %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('picker') }}">Pickers</a>
                             </li>
                         {% endif %}
-                        {% if is_granted('ROLE_SHIPPER') or is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_SHIPPER') or is_granted('ROLE_MANAGER') %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('shipper') }}">Shippers</a>
                             </li>
                         {% endif %}
-                        {% if is_granted('ROLE_ADMIN') %}
+                        {% if is_granted('ROLE_MANAGER') %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('manager') }}">Managers</a>
                             </li>

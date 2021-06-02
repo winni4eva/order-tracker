@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Order;
-use App\Entity\OrderItem;
-use App\Entity\OrderShippingDetail;
+use App\Message\CreateOrder;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Throwable;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class OrderService
 {
@@ -18,13 +17,17 @@ class OrderService
 
     private $orderRepository;
 
+    private $bus;
+
     public function __construct(
         EntityManagerInterface $entityManager,
-        OrderRepository $orderRepository
+        OrderRepository $orderRepository,
+        MessageBusInterface $bus
     )
     {
         $this->entityManager = $entityManager;
         $this->orderRepository = $orderRepository;
+        $this->bus = $bus;
     }
 
     public function findAll()
@@ -60,35 +63,7 @@ class OrderService
 
     public function saveOrder(array $data): bool
     {
-        $items = $data['orderItems'];
-        $shippingDetail = $data['orderShippingDetail'];
-        
-        $order = new Order();
-        $order->setTotal($data['total']);
-        $order->setDiscount($data['discount']);
-        $order->setState($data['state']);
-
-        foreach ($items as $item) {
-            $orderItem = new OrderItem();
-            $orderItem->setName($item['name']);
-            $orderItem->setPrice($item['price']);
-            $orderItem->setQuantity($item['quantity']);
-            $order->addOrderItem($orderItem);
-            $this->entityManager->persist($orderItem);
-        }
-
-        $orderShippingDetail = new OrderShippingDetail();
-        $orderShippingDetail->setCountry($shippingDetail['country']);
-        $orderShippingDetail->setState($shippingDetail['state']);
-        $orderShippingDetail->setZip($shippingDetail['zip']);
-        $orderShippingDetail->setStreet($shippingDetail['street']);
-        $orderShippingDetail->setPhone($shippingDetail['phone']);
-        $order->setOrderShippingDetail($orderShippingDetail);
-
-        
-        $this->entityManager->persist($orderShippingDetail);
-        $this->entityManager->persist($order);
-        $this->entityManager->flush();
+        $this->bus->dispatch(new CreateOrder($data));
 
         return true;
     }

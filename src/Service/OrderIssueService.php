@@ -7,31 +7,31 @@ namespace App\Service;
 use App\Entity\OrderIssue;
 use App\Repository\OrderIssueRepository;
 use App\Repository\OrderRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class OrderIssueService
 {
 
     protected $orderIssueRepository;
 
-    protected $userRepository;
-
     protected $orderRepository;
 
     private $entityManager;
 
+    private $security;
+
     public function __construct(
         OrderIssueRepository $orderIssueRepository,
         EntityManagerInterface $entityManager,
-        UserRepository $userRepository,
-        OrderRepository $orderRepository
+        OrderRepository $orderRepository,
+        Security $security
     )
     {
         $this->orderIssueRepository = $orderIssueRepository;
         $this->entityManager = $entityManager;
-        $this->userRepository = $userRepository;
         $this->orderRepository = $orderRepository;
+        $this->security = $security;
     }
 
     public function saveOrderIssue(int $orderId, array $issue): void
@@ -40,7 +40,7 @@ class OrderIssueService
             'condition' => $condition,
             'details' => $details
         ] = $issue;
-        $user = $this->userRepository->findOneByRoleField('SHIPPER');
+        $user = $this->security->getUser();
         $order = $this->orderRepository->findOneById($orderId);
         
         $orderIssue = new OrderIssue();

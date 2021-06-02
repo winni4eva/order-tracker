@@ -7,31 +7,31 @@ namespace App\Service;
 use App\Entity\ShippedBox;
 use App\Repository\OrderRepository;
 use App\Repository\ShippedBoxRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class ShippedBoxService
 {
 
     protected $shippedBoxRepository;
 
-    protected $userRepository;
-
     protected $orderRepository;
 
     private $entityManager;
 
+    private $security;
+
     public function __construct(
         ShippedBoxRepository $shippedBoxRepository,
-        UserRepository $userRepository,
         EntityManagerInterface $entityManager,
-        OrderRepository $orderRepository
+        OrderRepository $orderRepository,
+        Security $security
     )
     {
         $this->shippedBoxRepository = $shippedBoxRepository;
-        $this->userRepository = $userRepository;
         $this->entityManager = $entityManager;
         $this->orderRepository = $orderRepository;
+        $this->security = $security;
     }
 
     public function saveShippedBox(int $orderId, array $details): void
@@ -41,7 +41,7 @@ class ShippedBoxService
             'courier' => $courier,
             'imgPath' => $imgPath
         ] = $details;
-        $user = $this->userRepository->findOneByRoleField('SHIPPER');
+        $user = $this->security->getUser();
         $order = $this->orderRepository->findOneById($orderId);
 
         $shippedBox = new ShippedBox();

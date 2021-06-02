@@ -41,16 +41,18 @@ class LogService
         $state = $order->getState();
         $user = $this->security->getUser();
         
-        [$logState, $logMessage] = $this->getLogMessage($order, $state, $user);
+        if ($user) {
+            [$logState, $logMessage] = $this->getLogMessage($order, $state, $user);
 
-        $log = new OrderLog();
-        $log->setState($logState);
-        $log->setMessage($logMessage);
-        $log->setUserId($user);
-        $log->setOrderId($order);
+            $log = new OrderLog();
+            $log->setState($logState);
+            $log->setMessage($logMessage);
+            $log->setUserId($user);
+            $log->setOrderId($order);
 
-        $this->entityManager->persist($log);
-        $this->entityManager->flush();
+            $this->entityManager->persist($log);
+            $this->entityManager->flush();
+        }
     }
 
     private function getLogMessage(Order $order, string $state, User $user): array 

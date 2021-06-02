@@ -8,6 +8,10 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
+        public:
+            methods: [GET, POST]
+            pattern: ^/api
+            security: false
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false

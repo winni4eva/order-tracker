@@ -2,11 +2,13 @@
 
 {% block title %}Managers{% endblock %}
 
+{% block label %}Managers{% endblock %}
+
 {% block body %}
-<div class="container">
-    <h1>Managers</h1>
+<div class="container-fluid">
     <div class="row">
-        <div class="col-9 mb-3">
+        <div class="col-12 mb-3">
+            <h4 style="text-align: center">Orders</h4>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -14,7 +16,7 @@
                     <th scope="col">No. Items</th>
                     <th scope="col">Shipping Details</th>
                     <th scope="col">Total</th>
-                    <th scope="col">Discount</th>
+                    {# <th scope="col">Discount</th> #}
                     <th scope="col">Image</th>
                     <th scope="col">Details</th>
                     </tr>
@@ -23,11 +25,28 @@
                     {% for index, order in pagination %}
                         <tr>
                             <td>{{order.state}}</td>
-                            <td>{{order.orderItems|length}}</td>
-                            <td>{{order.orderShippingDetail.country}} - {{order.orderShippingDetail.state}}</td>
-                            <td>{{order.total}}</td>
-                            <td>{{order.discount}}</td>
                             <td>
+                                <ul>
+                                    {% for index, orderItem in order.orderItems %}
+                                        <li><span style="font-weight: bolder">Name:</span> {{orderItem.getName()}}</li>
+                                        <li><span style="font-weight: bolder">Price:</span> ${{orderItem.getPrice()}}</li>
+                                        <li><span style="font-weight: bolder">Qty:</span> {{orderItem.getQuantity()}}</li>
+                                        <hr/>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>{{order.orderShippingDetail.country}}</li>
+                                    <li>{{order.orderShippingDetail.state}}</li>
+                                    <li>{{order.orderShippingDetail.zip}}</li>
+                                    <li>{{order.orderShippingDetail.street}}</li>
+                                    <li>+{{order.orderShippingDetail.phone}}</li>
+                                </ul>
+                            </td>
+                            <td>${{order.total}}</td>
+                            {# <td>{{order.discount}}</td> #}
+                            <td style="text-align: center">
                                 {% if order.getShippedBoxes()[0].getLabelImage() is defined %}
                                     <img width="150" height="150" src="{{ asset(order.getShippedBoxes()[0].getLabelImage()) }}"/>
                                 {% endif %}
@@ -45,13 +64,11 @@
                 {{ knp_pagination_render(pagination) }}
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-12 mb-3">
         {% if order is defined %}
+            <h4 style="text-align: center">Item Details</h4>
             <table class="table table-bordered">
                 <thead>
-                    <tr>
-                        <th scope="col">Item Details</th>
-                    </tr>
                 </thead>
                 <tbody>
                     <tr>
@@ -59,17 +76,17 @@
                         <td>Items</td>
                         <td>Shipping</td>
                         <td>Total</td>
-                        <td>Discount</td>
+                        {# <td>Discount</td> #}
                     </tr>
                     <tr>
                         <td>{{order.state}}</td>
                         <td>
                             {% for index, item in order.orderItems %}
-                            <div>item #{{index+1}}</div>
-                            <ul style="list-style-type: none">
-                                <li>Name: {{item.name}}</li>
-                                <li>Price: {{item.price}}</li>
-                                <li>Qty: {{item.quantity}}</li>
+                            <ul>
+                                <li><span style="font-weight: bolder">Name:</span> {{item.name}}</li>
+                                <li><span style="font-weight: bolder">Price:</span> ${{item.price}}</li>
+                                <li><span style="font-weight: bolder">Qty:</span> {{item.quantity}}</li>
+                                <hr/>
                             </ul>
                             {% endfor %}
                         </td>
@@ -82,8 +99,8 @@
                                 <li>Phone: {{order.orderShippingDetail.phone}}</li>
                             </ul>
                         </td>
-                        <td>{{order.total}}</td>
-                        <td>{{order.discount}}</td>
+                        <td>${{order.total}}</td>
+                        {# <td>{{order.discount}}</td> #}
                     </tr>
                 </tbody>
             </table>
@@ -93,7 +110,7 @@
 
     <div class="row">
         <div class="col-6">
-            <h6>Logs</h6>
+            <h4 style="text-align: center">Logs</h4>
             <table class="table table-bordered">
                 <thead>
                     <tr>
